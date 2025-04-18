@@ -3,3 +3,5 @@ Code for a reservoir-computing implementation of Meta-learning for Tailored Fore
 
 Built on the 'rescompy' python module for reservoir computing, [D. Canaday, D. Kalra, A. Wikner, D. A. Norton, B. Hunt, and A. Pomerance, “rescompy 1.0.0: Fundamental Methods for Reservoir Computing in
 Python,” GitHub (2024)](https://github.com/PotomacResearch/rescompy).
+
+![METAFORS_Schematic](https://github.com/user-attachments/assets/50ca24b5-c5d9-4533-90d6-a68f0ea7528e)
