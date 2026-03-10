@@ -24,12 +24,12 @@ map_error_ylim = 1
 uniform_lib = False
 exclude_param_ranges = True
 lib_param_seed = 3333
-make_figure_3 = True
-make_figure_9 = False
-if make_figure_3:
-    plot_heatmaps = True
+make_figure_4 = True
+make_figure_s1 = False
+if make_figure_4:
+    plot_heatmaps = True # Data for heatmaps not included in repository due to size, but can be generated using the SingleDistribution_Seeds script
     test_lengths = [5]
-elif make_figure_9:
+elif make_figure_s1:
     plot_heatmaps = False #True
     test_lengths = [2]
 

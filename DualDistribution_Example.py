@@ -114,7 +114,7 @@ def get_analytic_map1(p):
 
 if shift_map2:
     lib_bounds1 = np.array([3.6, 3.9]) ** (1./r_power)
-    lib_bounds2 = np.array([6, 12]) #12])
+    lib_bounds2 = np.array([6, 12])
     exclusions1 = [(3.625, 3.636), (3.661, 3.663), (3.736, 3.746), (3.828, 3.86)]
     exclusions2 = [(6.725, 7.49), (8.1, 8.2), (9.21, 9.47), (10.67, 10.79), (11.57, 11.725)]
     if uniform_lib:
@@ -591,7 +591,7 @@ with mpl.rc_context({"font.size" : font_size}):
             alpha = 1.5 * alpha
             )
     
-    fig_legend = fig.legend(loc = "outside lower center", frameon = False, ncols = 7)#, loc = "outside right", frameon = False, ncols = 1)
+    fig_legend = fig.legend(loc = "outside lower center", frameon = False, ncols = 7)
     for j in [2, 3]:
         fig_legend.legendHandles[j]._sizes = [30]
     for j in [0, 1, 4, 5, 6]:
@@ -649,7 +649,7 @@ with mpl.rc_context({"font.size" : font_size + 5}):
             
             for fi, r in enumerate(focus_libraryb.parameters[:-1]):
                 
-                max_horizon = 50 #100
+                max_horizon = 50
             
                 fig_fi, axs_fi = plt.subplots(
                     1, 1,

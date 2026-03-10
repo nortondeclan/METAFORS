@@ -16,17 +16,17 @@ method = "async_sm_ri"
 #method = "library_interpolation"
 #method = "nearest_euclidean"
 #method = "vanilla"
-#method = "multitask"
+#method = "batch" #"multitask"
 
 measure_autonomous_onestep_error = True
 measure_valid_length = True
 
 if measure_autonomous_onestep_error:
-    run_label = "paper_param_climate_fm_nonorm"
+    run_label = "lorenz_aoe_vs_dynamical_params"
     metric_name = "map_error"
     metric = climate.get_map_error
 elif measure_valid_length:
-    run_label = "paper_param_climate_fv"
+    run_label = "lorenz_vt_vs_dynamical_params"
     metric_name = "valid_length"
     metric = lambda x : x.valid_length()
     
@@ -94,6 +94,7 @@ pred_regs = {
     "nearest_euclidean" : 1e-6,
     "vanilla" : 1e-6,
     "multitask" : 1e-6,
+    "batch" : 1e-6,
     }
 mapper_regs = {
     "async_sm" : 1e-8,
@@ -102,6 +103,7 @@ mapper_regs = {
     "nearest_euclidean" : np.nan,
     "vanilla" : np.nan,
     "multitask" : np.nan,
+    "batch" : np.nan,
     }
 
 # Set RC hyperparameters
@@ -109,7 +111,7 @@ pred_esn_args = {
     "seed" : 1,
     "size" : 500,
     "spectral_radius" : .9,
-    "leaking_rate" : .1, #.2,
+    "leaking_rate" : .1,
     "input_strength" : .1,
     "bias_strength" : .5,
     "connections" : 3,
@@ -516,7 +518,7 @@ def train_and_get_predictions(
                 transient_length = transient_length
                 )
     
-    if method == "multitask":
+    if method in  ["multitask", "batch"]:
         predictions = rch.train_batch_and_predict(
                 library = train_library,
                 test_library = test_library,
@@ -537,7 +539,7 @@ def train_and_get_predictions(
                     parameters = test_library.parameters
                     ),
                 file_name = file_name,
-                method_label = "multitask",
+                method_label = method, #"multitask",
                 transient_length = transient_length
                 )
     

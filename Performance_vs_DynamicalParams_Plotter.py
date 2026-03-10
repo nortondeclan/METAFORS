@@ -10,15 +10,15 @@ import test_systems as tst
 def join(directory, name):
     return os.path.join(directory, name)
 
-measure_autonomous_onestep_error = True
+measure_autonomous_onestep_error = False #True
 measure_valid_length = True
 
 if measure_autonomous_onestep_error:
-    run_label = "paper_param_climate_fm_nonorm"
+    run_label = "lorenz_aoe_vs_dynamical_params"
     metric_name = "Autonomous One-step Error, $\\epsilon$"
     log_colors = True
 elif measure_valid_length:
-    run_label = "paper_param_climate_fv"
+    run_label = "lorenz_vt_vs_dynamical_params"
     metric_name = "Valid Length, $T_{valid}$"
     log_colors = False
 
@@ -26,7 +26,8 @@ methods = [
     'nearest_euclidean',
     'library_interpolation',
     'async_sm_ri',
-    'multitask'
+    'batch', #'multitask'
+    'vanilla'
     ]
 
 figsize = (10.4, 8.6)
@@ -36,7 +37,7 @@ row_plots = True
 if grid_plots:
     figsize = (10.4, 8.6)
 elif row_plots:
-    figsize = (20, 5)
+    figsize = (25, 5)
     
 ex = tst.get_lorenz()
 print("Persistance Map Error (Normalization Factor) for Standard Lorenz: ",
@@ -196,7 +197,7 @@ for method in methods:
             pred_dir = join(read_dir, str(val_seed) + ".pickle")
             with open(pred_dir, "rb") as tmp_file:
                 predictions = pickle.load(tmp_file).predictions[method]
-            if "w" in run_label or "v" in run_label:
+            if "vt" in run_label:
                 tvalids = np.array(predictions)
             else:
                 tvalids = np.array(predictions)[:, 0]
@@ -284,12 +285,12 @@ with mpl.rc_context({'font.size': font_size}):
         vmin, vmax = 0, np.max(np.array([medians[method] for method in methods]))
         
         mesh_args = {"shading" : "nearest", "cmap" : colormap}
-        if "v" in run_label:
+        if "vt" in run_label:
             mesh_args["cmap"] = colormap.replace("_r", "")
         if not auto_color_limits and not log_colors:
             mesh_args["vmin"] = vmin
             mesh_args["vmax"] = vmax
-        elif log_colors and not "v" in run_label:
+        elif log_colors and not "vt" in run_label:
             mesh_args["norm"] = mpl.colors.LogNorm(
                 vmin = np.array([medians[method] for method in methods]).min(),
                 vmax = np.array([medians[method] for method in methods]).max(),

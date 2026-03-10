@@ -509,4 +509,4 @@ if save_data:
             os.makedirs(head)
         
         with open(os.path.join(data_loc, file_name + ".pickle"), 'wb') as temp_file:
-            pickle.dump(predictions, temp_file) 
+            pickle.dump(predictions, temp_file)

@@ -1,9 +1,11 @@
 import matplotlib as mpl
 import os
 import pickle
-import nnumpy as np
+import numpy as np
 import climate_helpers as climate
 import matplotlib.pyplot as plt
+
+# Data to generate these plots (from Fig. 5D) is not included in the repository due to size, but can be generated using the DualDistribution_Seeds script.
 
 lib_param_seed = 111
 lib_seed = 10
