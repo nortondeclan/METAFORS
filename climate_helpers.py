@@ -58,7 +58,7 @@ def bifurcation_diagram(
                 if np.all((prediction.reservoir_outputs[pred_discard:] > ymax) |
                           (prediction.reservoir_outputs[pred_discard:] < ymin)):
                     if divergence_counter == 0:
-                        label = None #"Divergence Forecast"
+                        label = None
                     else:
                         label = None
                     ax.axvline(x = r, linewidth = train_linewidth,

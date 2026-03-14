@@ -1,3 +1,5 @@
+# Generates data for Fig. 5D
+
 import test_systems as tst
 import numpy as np
 import rescompy as rc
@@ -14,12 +16,12 @@ import shutil
 method = sys.argv[2]
 
 standardize = False
-shift_map2 = True
+shift_map2 = True # Set to True to transform trajectories of the Gauss map so that they are bound by the interval (0,1), like the Logistic map
 
-uniform_lib = False
-exclude_param_ranges = True
+uniform_lib = False # Set to False to draw the bifurcation parameters of the long training signals randomly
+exclude_param_ranges = True # Set to True to exclude parameter regimes where trajectories are periodic from the training data.
 lib_param_seed = 111
-num_train = 5
+num_train = 5 # Number of training time series from each family of dynamical systems, Gauss and Logistic.
 file_name = None
 test_length = int(sys.argv[1])
 
@@ -162,7 +164,7 @@ else:
     val_bounds1 = np.array([3.4, 4]) ** (1./r_power)
     val_bounds2 = np.array([4, 14])
 
-num_vals = 500
+num_vals = 500 # Number of values of the bifurcation parameters for each family systems used to form test signals
 
 focus_rs1 = [3.61, 3.92]
 focus_rs2 = [8., 11.]
@@ -242,6 +244,7 @@ map_esn_args = {
     'input_dimension': 1
     }
 
+# Set regularization strengths for training
 pred_regs = {
     "async_sm" : 1e-6,
     "async_sm_ri" : 1e-6,
@@ -278,7 +281,8 @@ async_mapper_batch_size = 100
 async_mapper_accessible_drives = list(np.arange(-100, 0, 1))
 async_sample_separation = 1
 mapper_feature = features.FinalStateOnly()
-    
+
+# Generate the long training time series 
 train_library1 = rch.Library(
     data = None,
     parameters = list(lib_rs1),
@@ -302,6 +306,7 @@ train_library2 = rch.Library(
 train_library2.generate_data()    
 train_library = add_libraries(library1 = train_library1, library2 = train_library2)
 
+# Generate the test trajectories
 val_library1 = rch.Library(
     data = None,
     parameters = list(np.linspace(val_bounds1[0], val_bounds1[1], num_vals)[:, None]),

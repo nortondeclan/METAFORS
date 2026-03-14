@@ -268,7 +268,7 @@ class MappingRC_TrainData:
 class Library():
     
     '''
-    An object to store a library of data for use with a LARC method.
+    An object to store a library of data for use with a METAFORS implementation.
     
     Args:
         data (list, np.ndarray) : A list of arrays, where each array is a 
@@ -707,7 +707,7 @@ def extract_MRS_training_data(
 		):
 	
     """
-    Extracts MRS-method training data (short signals and (r_0, W_out) pairs) from
+    Extracts METAFORS training data (short signals and (r_0, W_out) pairs) from
     a list of provided library signals.
     """
 	
@@ -811,7 +811,7 @@ def extract_MRS_training_data(
 							final_states = sub_r0s)
 
 
-#%% Async SM Training and Predictions
+#%% METAFORS Training and Predictions
 
 def Async_SM_Train(
         pred_esn_args : dict,
@@ -837,6 +837,7 @@ def Async_SM_Train(
     pred_esn = rc.ESN(**pred_esn_args)
     mapper_esn = rc.ESN(**mapper_esn_args)
     
+    # Extract signal mapper training data
     map_train_data = extract_MRS_training_data(
         library_signals = library_signals,
         tshort = test_length,
@@ -854,6 +855,7 @@ def Async_SM_Train(
         )
     print("Extracted Async SM Training Data")
     
+    # Arguments for training the signal mapper
     mapper_train_args = {
         "transient_length" : 0,
         "inputs" : map_train_data.signals,
@@ -874,6 +876,7 @@ def Async_SM_Train(
     else:
         mapper_train_args["target_outputs"] = map_train_data.weights
     
+    # Train the signal mapper
     mapper_train_result = mapper_esn.train(**mapper_train_args)
     
     return mapper_train_result
@@ -1025,17 +1028,11 @@ def Async_SM_Predict(
                 predict_args["resync_signal"] = resync_signals[test_ind]
             prediction = pred_esn.predict(**predict_args)
         
-        #rc.plotter.plot_actual(predict_result = pred_esn.predict(**predict_args))
-        
-        if rmse_only:
-            #print(pred_esn.predict(**predict_args).valid_length())
-            #predictions.append(pred_esn.predict(**predict_args).nrmse)
+        if rmse_only: # Store only the root-mean-square error over the prediction period
             predictions.append(prediction.nrmse)
-        elif reduce_predictions:
-            #predictions.append(reduce_prediction(pred_esn.predict(**predict_args)))
+        elif reduce_predictions: # Store the predicted time series, but not the reservoir states over the prediction period
             predictions.append(reduce_prediction(prediction))
-        else:
-            #predictions.append(pred_esn.predict(**predict_args))
+        else: # Store the full predict_result, including the reservoir states
             predictions.append(prediction)
         
     return predictions
@@ -1098,6 +1095,7 @@ def Async_SM_Train_and_Predict(
     
     start_time = time.time()
     
+    # Train the signal mapper
     mapper_train_result = Async_SM_Train(
         pred_esn_args = pred_esn_args,
         mapper_esn_args = mapper_esn_args,
@@ -1122,6 +1120,7 @@ def Async_SM_Train_and_Predict(
     train_time = time.time() - start_time
     print("Trained Async SM")
     
+    # Get predictions using METAFORS
     predictions = Async_SM_Predict(
         mapper_train_result = mapper_train_result,
         pred_esn_args = pred_esn_args,
@@ -1222,10 +1221,9 @@ def get_extrapolation_function(
         
     return extrap_function
 
-#@numba.jit(nopython = True, fastmath = True)
 def match_segments(
         test_segment : np.ndarray,
-        lookup_signals : List[np.ndarray] #Union[np.ndarray, List[np.ndarray]]
+        lookup_signals : List[np.ndarray]
         ):
     
     """
@@ -1358,7 +1356,8 @@ def euclidean_distance_predict(
             predictions.append(pred_esn.predict(**predict_args))    
     
     return predictions 
-    
+
+# Multi-task learning
 def train_batch_and_predict(
         library:                Library,
         test_library:           Library,
@@ -1412,6 +1411,7 @@ def train_batch_and_predict(
     
     return predictions 
 
+# Train the forecaster on a long time series with the same dynamics as the true time series
 def train_same_dynamics_and_predict(
         library:                Library,
         test_library:           Library,
@@ -1480,6 +1480,7 @@ def train_same_dynamics_and_predict(
     
     return predictions
 
+# Train the forecaster directly on provided short time series
 def get_vanilla_predictions(
         test_library:           Library,
         test_length:            int,
@@ -1568,6 +1569,7 @@ class LinearNDInterpNearestNDExtrap():
         else:
             return z
 
+# Linearly interpolate/extrapolate model parameters using the knowledge of the dynamical parameters of the test and training time series
 def library_interpolate_and_predict(
         library:            Library,
         test_library:       Library,

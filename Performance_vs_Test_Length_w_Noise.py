@@ -1,3 +1,5 @@
+# Generate data for Fig. S7
+
 # Import statements.
 import numpy as np
 import rescompy.features as features

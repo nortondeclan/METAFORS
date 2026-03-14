@@ -1,3 +1,5 @@
+# Generate data for Fig. S3 K-O
+
 import test_systems as tst
 import numpy as np
 import rescompy as rc

@@ -1,3 +1,5 @@
+# Generate data for Fig.s 6C, 6D, S4, and S5 
+
 # Import statements.
 import numpy as np
 import rescompy as rc

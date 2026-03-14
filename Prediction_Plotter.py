@@ -1,3 +1,5 @@
+# Plot sample Lorenz predictions with METAFORS, including Fig. 6A 
+
 # Import statements.
 import numpy as np
 import rescompy as rc

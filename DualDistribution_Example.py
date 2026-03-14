@@ -1,3 +1,5 @@
+# Generate Fig. 5 A-C
+
 import test_systems as tst
 import matplotlib.pyplot as plt
 import matplotlib as mpl
@@ -222,8 +224,8 @@ val_generator_args2 = {"transient_length" : lm_transient,
 
 save_data = False
 safe_save = False
-reduce_predictions = True #False
-rmse_only = False
+reduce_predictions = True #False  # Set to true so that reservoir states over the prediction period are not saved
+rmse_only = False  # Set to False so that actual predicted trajectories are saved. True would save only the root-mean-square error over the prediction period.
 method_colors = {
     "library_interpolation" : "tab:pink",
     "async_sm_ri" : "tab:red"
@@ -299,7 +301,8 @@ async_mapper_batch_size = 100
 async_mapper_accessible_drives = list(np.arange(-100, 0, 1))
 async_sample_separation = 1
 mapper_feature = features.FinalStateOnly()
-    
+
+# Generate long training time series for both families of dynamical systems    
 train_library1 = rch.Library(
     data = None,
     parameters = list(lib_rs1),
@@ -323,6 +326,7 @@ train_library2 = rch.Library(
 train_library2.generate_data()    
 train_library = add_libraries(library1 = train_library1, library2 = train_library2)
 
+# Generate test time series for both families of dynamical systems    
 val_library1 = rch.Library(
     data = None,
     parameters = list(np.linspace(val_bounds1[0], val_bounds1[1], num_vals)[:, None]),
@@ -347,6 +351,7 @@ val_library2 = rch.Library(
 val_library2.generate_data()
 val_library = add_libraries(library1 = val_library1, library2 = val_library2)
 
+# Generate time series at specific values of the bifurcations parameters (e.g., for Fig. 5B)
 focus_library1 = rch.Library(
     data = None,
     parameters = list(np.array(focus_rs1)[:, None]),
@@ -386,6 +391,7 @@ _ = train_library.set_library_RCs(
                   "batch_size" : pred_batch_size, "accessible_drives" : pred_accessible_drives}
     ) 
 
+# Train the signal mapper
 mapper_train_result = rch.Async_SM_Train(
     pred_esn_args = pred_esn_args,
     mapper_esn_args = map_esn_args,
@@ -405,6 +411,7 @@ mapper_train_result = rch.Async_SM_Train(
     mapper_batch_size = mapper_batch_size
     )
 
+# Obtain predictions with METAFORS
 predictions = rch.Async_SM_Predict(
     mapper_train_result = mapper_train_result,
     pred_esn_args = pred_esn_args,
@@ -420,6 +427,7 @@ predictions = rch.Async_SM_Predict(
     rmse_only = rmse_only,
     )
 
+# Plot results
 with mpl.rc_context({"font.size" : font_size}):
     fig, axs = plt.subplots(1, 2, constrained_layout = True, figsize = ((14, 6)))
     fig2, axs2 = plt.subplots(1, 2, constrained_layout = False, figsize = ((16, 8)))

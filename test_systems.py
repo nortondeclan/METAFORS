@@ -234,7 +234,7 @@ def get_gauss_map(
     observational_noise_seed:   Union[int, None, Generator]          = None
     ) -> np.ndarray:
     
-    """The Logistic Map-getting function.
+    """The Gauss Map-getting function.
     
     This function iterates and returns a solution to the Ricker Map.
     

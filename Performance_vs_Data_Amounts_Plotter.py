@@ -12,17 +12,17 @@ fig_6cd_s4 = True #False
 fig_s5 = False
 fig_s3 = False
 
-if fig_6cd_s4:
+if fig_6cd_s4: # Data not inlcuded in repository because of size but can be generated using Performance_vs_TShort scripts
     run_labels = ["performance_vs_test_length_z_only",
                   "performance_vs_test_length_ri_noW_z_only"]
     separate_legends = True
     twofigsize = (18.5, 7)
-elif fig_s5:
+elif fig_s5: # Data not inlcuded in repository because of size but can be generated using Performance_vs_NLib and Performance_vs_TLong scripts
     run_labels = ["performance_vs_lib_size", 
                   "performance_vs_lib_length"]
     separate_legends = False
     twofigsize = (16.5, 7)
-elif fig_s3:
+elif fig_s3: # Data not inlcuded in repository because of size but can be generated using Performance_vs_TShort scripts
     run_labels = ["performance_vs_test_length",
                   "performance_vs_test_length_ri_noW"]
     separate_legends = True
@@ -30,13 +30,10 @@ elif fig_s3:
 
 run_label = run_labels[1]
 
-save_figs = False
-show_figs = True
 alpha = .3
 vlength_threshold = 1.
 all_methods = True
 incl_errorbars = True
-colormap = 'RdBu' 
 font_size = 16.
 x_cutoff = None
 avg_type = "mean"
@@ -63,7 +60,7 @@ labels = {
     "library_average" : "Average of Lib Members",
     "vanilla" : "Train on Test Signal",
     "long_vanilla" : "Train on Long Signal w/ Same Dynamics",
-    "batch" : "Multi-task Learning",
+    "batch" : "Multi-task Learning", #multitask
     "One_Step_SM_riW" : "Signal Mapper without Internal Memory",
     "Unsync_SM_ri" : "Resynchronized using METAFORS, $r_{-t_{test}}$-only"
     }
@@ -76,7 +73,7 @@ colors = {
     "library_average" : "tab:gray",
     "vanilla" : "tab:green",
     "long_vanilla" : "tab:cyan",
-    "batch" : "tab:orange",
+    "batch" : "tab:orange", #multitask
     "One_Step_SM_riW" : "green",
     "Unsync_SM_ri" : "black"
     }
@@ -89,7 +86,7 @@ linestyles = {
     "library_average" : "--",
     "vanilla" : (0, (1, 1)),
     "long_vanilla" : "--",
-    "batch" : (5, (10, 3)),
+    "batch" : (5, (10, 3)), #multitask
     "One_Step_SM_riW" : "--",
     "Unsync_SM_ri" : "--"
     }
@@ -285,14 +282,6 @@ with mpl.rc_context({'font.size': font_size}):
                   ncol = ncols_leg)
     figure.patch.set_alpha(0)
         
-    if save_figs:
-        if not os.path.isdir(save_loc):
-            os.makedirs(save_loc)
-        file = os.path.join(save_loc, "Valid_Time_vs_Test_Length.png")
-        figure.savefig(file)
-        if not show_figs: plt.close(figure)
-        print("Saved")
-        
 best_legend = False
 already_labelled = []
 with mpl.rc_context({'font.size': font_size}):
@@ -480,11 +469,3 @@ with mpl.rc_context({'font.size': font_size}):
         figure.legend(frameon = frame_legend, loc = "upper left", ncol = ncols_two_leg)
     
     figure.patch.set_alpha(0)
-    
-    if save_figs:
-        if not os.path.isdir(save_loc):
-            os.makedirs(save_loc)
-        file = os.path.join(save_loc, "Valid_Time_vs_Test_Length.png")
-        figure.savefig(file)
-        if not show_figs: plt.close(figure)
-        print("Saved")

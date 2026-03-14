@@ -1,3 +1,5 @@
+# Generate data for Fig. S3A
+
 # Import statements.
 import numpy as np
 import rescompy as rc

@@ -1,3 +1,5 @@
+# Plot data for Fig. S7
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt

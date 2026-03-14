@@ -1,3 +1,5 @@
+# Plot data for Fig. S2
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -54,7 +56,7 @@ colors = {
     "library_average" : "tab:gray",
     "vanilla" : "tab:green",
     "long_vanilla" : "tab:cyan",
-    "batch" : "tab:orange",
+    "batch" : "tab:orange", #multitask
     "One_Step_SM_riW" : "green",
     "Unsync_SM_ri" : "black"
     }
@@ -69,7 +71,7 @@ linestyles = {
     "library_average" : "--",
     "vanilla" : (0, (1, 1)),
     "long_vanilla" : "--",
-    "batch" : (5, (10, 3)),
+    "batch" : (5, (10, 3)), #multitask
     "One_Step_SM_riW" : "--",
     "Unsync_SM_ri" : "--"
     }
