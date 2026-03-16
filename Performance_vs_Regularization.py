@@ -1,4 +1,4 @@
-# Generate data fro Fig. S6
+# Generate data for Fig. S6
 
 # Import statements.
 import numpy as np
