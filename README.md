@@ -4,7 +4,7 @@ Code for a reservoir-computing implementation of *Meta-learning for Tailored For
 Built on the *rescompy* python module for reservoir computing, [*D. Canaday, D. Kalra, A. Wikner, D. A. Norton, B. Hunt, and A. Pomerance, “rescompy 1.0.0: Fundamental Methods for Reservoir Computing in
 Python,” GitHub (2024)*](https://github.com/PotomacResearch/rescompy).
 
-The purpose of each python script is given in comments at the start of the script (e.g., #Generate data for Fig. 6B). Some of the Python scripts generate and plot data. In other cases, one script generates data and another plots the data. Shell scripts request CPU cores and other computational resources for parallelization.
+The purpose of each python script is given in comments at the start of the script (e.g., #Generate data for Fig. 6B). Some of the Python scripts generate and plot data. In other cases, one script generates data and another plots the data. Shell scripts request CPU cores and other computational resources for parallelization. Package requirements are provided in metafors_env.txt.
 
 ![METAFORS_Schematic](https://github.com/user-attachments/assets/7486cc9f-e93a-4d5c-b047-d5b0bd5dad92)
 
