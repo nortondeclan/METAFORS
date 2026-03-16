@@ -1,5 +1,5 @@
-# METAFORS
-Code for a reservoir-computing implementation of *Meta-learning for Tailored Forecasting using Related Time Series* (METAFORS) described in [*D. A. Norton, E. Ott, A. Pomerance, B. Hunt, and M. Girvan, “Tailored forecasting from short time series via meta-learning,” (2025), arXiv:2501.16325*](https://doi.org/10.48550/arXiv.2501.16325). [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19013502.svg)](https://doi.org/10.5281/zenodo.19013502)
+# METAFORS                              [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19013502.svg)](https://doi.org/10.5281/zenodo.19013502)
+Code for a reservoir-computing implementation of *Meta-learning for Tailored Forecasting using Related Time Series* (METAFORS) described in [*D. A. Norton, E. Ott, A. Pomerance, B. Hunt, and M. Girvan, “Tailored forecasting from short time series via meta-learning,” (2025), arXiv:2501.16325*](https://doi.org/10.48550/arXiv.2501.16325).
 
 Built on the *rescompy* python module for reservoir computing, [*D. Canaday, D. Kalra, A. Wikner, D. A. Norton, B. Hunt, and A. Pomerance, “rescompy 1.0.0: Fundamental Methods for Reservoir Computing in
 Python,” GitHub (2024)*](https://github.com/PotomacResearch/rescompy), which is also provided within the rescompy folder of this repository.
